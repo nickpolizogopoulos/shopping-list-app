@@ -3,73 +3,72 @@
 <div class="container mt-5 ps-5 pe-5">
     <div class="row justify-content-center">
         <div class="listBox col-xxl-7">
-            
-            <h1 class="niceblue">My shopping list application</h1>
-            <p class="lead">Use the form to make your own shopping list!</p>
+            <h1 class="niceblue">My shopping list Application</h1>
+            <p class="lead">Use the form to make your shopping list!</p>
             <hr class="mb-4">
 
-            <!-- INPUTS  -->
-            <section>
+            <section class="mb-3 lead">
                 <div class="mb-3">
-                    <label for="itemname" class="form-label lead">Item name</label>
-                    <input [(ngModel)]="itemName" type="text" class="form-control shadow-none" id="itemname">
+                    <label class="form-label">Item name</label>
+                    <input [(ngModel)]="itemName" type="text" class="form-control shadow-none">
                     <small *ngIf="missingName" class="text-danger">This field is required.</small>
                 </div>
-
                 <div class="mb-3">
-                    <label for="quantity" class="form-label lead">Quantity</label>
-                    <input [(ngModel)]="itemQuantity" type="number" class="form-control shadow-none" id="quantity">
+                    <label class="form-label">Quantity</label>
+                    <input [(ngModel)]="itemQuantity" type="number" class="form-control shadow-none">
                     <small *ngIf="missingQuantity" class="text-danger">This field is required.</small>
                 </div>
-                
                 <div class="mb-3">
-                    <label for="price" class="form-label lead">Price</label>
-                    <input [(ngModel)]="itemPrice" type="number" class="form-control shadow-none" id="price">
+                    <label class="form-label">Price</label>
+                    <input [(ngModel)]="itemPrice" type="number" class="form-control shadow-none">
                     <small *ngIf="missingPrice" class="text-danger">This field is required.</small>
                 </div>
-                <button (click)="onSubmit()" class="btn btn-outline-primary mb-4">Add Item</button>
-
-                <div *ngIf="missingValue" class="alert alert-danger alert-dismissible" role="alert">
+                <button (click)="onSubmit()" class="btn btn-primary mb-4">Add Item</button>
+                <div *ngIf="missingValue" class="alert alert-danger alert-dismissible">
                     {{ alertText() }}
-                    <button (click)="closeAlert()" type="button" class="btn-close shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button (click)="closeAlert()" type="button" class="btn-close shadow-none" data-bs-dismiss="alert"></button>
                 </div>
             </section>
 
-
             <hr class="mt-4 mb-4">
+            <h3 class="niceblue mb-3">Your list {{headingText()}}</h3>
 
-
-            <h3 class="niceblue">Your list {{ headingText() }}</h3>
             <section *ngIf="shoppingList.length > 0">
-                
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">-</th>
+                        <tr class="lead">
+                            <td scope="col">No.</td>
+                            <td scope="col">Name</td>
+                            <td scope="col">Quantity</td>
+                            <td scope="col">Price</td>
+                            <td scope="col">-</td>
                         </tr>
                     </thead>
                     <tbody>
-
                         <tr *ngFor="let item of shoppingList let i = index">
-                            <th scope="row"> {{ i+1 }} </th>
+                            <td scope="row"> {{ i+1 }} </td>
                             <td> {{ item.name }} </td>
                             <td> {{ item.quantity }} </td>
                             <td> {{ item.price }} </td>
                             <td>
-                                <button (click)="onDelete(i)" class="delete">delete</button>
+                                <button
+                                    (click)="onDelete(i)"
+                                    class="delete"
+                                    >delete
+                                </button>
                             </td>
                         </tr>
-                        
                     </tbody>
-
                 </table>
-                <button (click)="onClear()" class="btn btn-primary mt-3">Clear list</button>
-            </section>
 
+                <p class="lead">Total Price: {{totalPrice()}} €</p>
+
+                <button
+                    (click)="onClear()"
+                    class="btn btn-primary mt-3"
+                    >Clear list
+                </button>
+            </section>
         </div>
     </div>
 </div>

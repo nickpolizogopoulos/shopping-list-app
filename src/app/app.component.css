@@ -1,5 +1,11 @@
 
+* {
+    font-family: 'Bebas Neue', sans-serif;    
+}
 
+.btn {
+    border-radius: 4px;
+}
 
 .niceblue {
     color: rgb(17, 46, 97);
@@ -7,11 +13,10 @@
 
 .listBox {
     background-color: white;
-    padding: 50px;
+    padding: 50px 40px;
     margin-bottom: 50px;
-    border: 2px solid rgb(17, 46, 97);;
-    border-radius: 7px;
-    align-items: center;
+    border: 1px solid rgba(17, 46, 97, 0.385);
+    box-shadow: 7px 7px 14px #00000028;
 }
 
 .delete {

@@ -12,35 +12,34 @@ interface ShoppingProps {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  itemName = '';
-  itemQuantity = '';
-  itemPrice = '';
-  shoppingList:ShoppingProps[] = []
+  itemName:string = '';
+  itemQuantity:string = '';
+  itemPrice:string = '';
+  shoppingList:ShoppingProps[] = [];
 
-  missingName = false;
-  missingQuantity = false;
-  missingPrice = false;
-  missingValue = false;
+  missingName:boolean = false;
+  missingQuantity:boolean = false;
+  missingPrice:boolean = false;
+  missingValue:boolean = false;
 
-  //you need cocaine to write this thing,.
-  onSubmit() {
-    if (this.itemName === '' ||
+  onSubmit():void {
+    if ( this.itemName === '' ||
     this.itemPrice === '' ||
-    this.itemQuantity === '') {
-      if (this.itemName === '') {
+    this.itemQuantity === '' ) {
+      if ( this.itemName === '' ) {
         this.missingName = true;
         this.missingValue = true;
       } else this.missingName = false;
-      if (this.itemQuantity === '') {
+      if ( this.itemQuantity === '' ) {
         this.missingQuantity = true;
         this.missingValue = true;
       } else this.missingQuantity = false;
-      if (this.itemPrice === '') {
+      if ( this.itemPrice === '' ) {
         this.missingPrice = true;
         this.missingValue = true;
       } else this.missingPrice = false;
       return      
-    }
+    };
     this.missingName = false;
     this.missingQuantity = false;
     this.missingPrice = false;
@@ -48,7 +47,7 @@ export class AppComponent {
       name: this.itemName,
       quantity: this.itemQuantity,
       price: this.itemPrice
-    })
+    });
     this.missingValue = false;
     this.itemName = '';
     this.itemPrice = '';
@@ -58,15 +57,12 @@ export class AppComponent {
   onClear():void {
     this.shoppingList.length = 0;
   }
-  // onDelete(id:number) {
-  //   this.shoppingList = [...this.shoppingList].map((item) => item.id !== id ? this.shoppingList : '' )
-  // }
-
-  onDelete(index: number): void {
+  
+  onDelete( index:number ):void {
     this.shoppingList.splice(index, 1);
   }
 
-  closeAlert() {
+  closeAlert():void {
     this.missingValue = false;
   }
 
@@ -83,14 +79,19 @@ export class AppComponent {
     const two:string = 'Please fill the two missing fields.';
     const one:string = 'Please fill the missing field.';
     let count:number = 0;
-    if (this.missingName) count ++;
-    if (this.missingPrice) count ++;
-    if (this.missingQuantity) count ++;
+    if ( this.missingName ) count ++;
+    if ( this.missingPrice ) count ++;
+    if ( this.missingQuantity ) count ++;
     return count === 3 ? all : count === 2 ? two : one
   }
 
-  totalPrice( item:ShoppingProps ):number {
-    return +item.price
+  totalPrice():number {
+    let total:number = 0;
+    for (let item of this.shoppingList) {
+      total += parseInt(item.price)
+    }
+    console.log(total);
+    return total;
   }
   
 }
