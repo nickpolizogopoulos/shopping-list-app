@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
-interface ShoppingProps {
-  name: string;
-  quantity: string;
-  price: string;
+export interface ListItemProps {
+  name:string;
+  description:string;
+  importance:boolean;
+  type: 'personal' | 'household';
 }
 
 @Component({
@@ -12,86 +13,45 @@ interface ShoppingProps {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  itemName:string = '';
-  itemQuantity:string = '';
-  itemPrice:string = '';
-  shoppingList:ShoppingProps[] = [];
 
-  missingName:boolean = false;
-  missingQuantity:boolean = false;
-  missingPrice:boolean = false;
-  missingValue:boolean = false;
+  addTwo:boolean = true;
 
-  onSubmit():void {
-    if ( this.itemName === '' ||
-    this.itemPrice === '' ||
-    this.itemQuantity === '' ) {
-      if ( this.itemName === '' ) {
-        this.missingName = true;
-        this.missingValue = true;
-      } else this.missingName = false;
-      if ( this.itemQuantity === '' ) {
-        this.missingQuantity = true;
-        this.missingValue = true;
-      } else this.missingQuantity = false;
-      if ( this.itemPrice === '' ) {
-        this.missingPrice = true;
-        this.missingValue = true;
-      } else this.missingPrice = false;
-      return      
-    };
-    this.missingName = false;
-    this.missingQuantity = false;
-    this.missingPrice = false;
-    this.shoppingList.push({
-      name: this.itemName,
-      quantity: this.itemQuantity,
-      price: this.itemPrice
-    });
-    this.missingValue = false;
-    this.itemName = '';
-    this.itemPrice = '';
-    this.itemQuantity = '';
+  itemList:ListItemProps[] = [
+    {name: 'Laptop', description: 'For working remotely.', importance: true, type: 'personal'},
+    {name: 'Carpet', description: 'For my living room.', importance: false, type: 'household'},
+  ];
+
+  onItemAdded( itemData:ListItemProps ):void {
+    this.itemList.push({
+      name: itemData.name,
+      description: itemData.description,
+      importance: itemData.importance,
+      type: itemData.type
+      })
   }
-
-  onClear():void {
-    this.shoppingList.length = 0;
+  onClearList():void {
+    this.itemList.length = 0;
   }
-  
-  onDelete( index:number ):void {
-    this.shoppingList.splice(index, 1);
+  removeLastItem():void {
+    this.itemList.pop()
   }
-
-  closeAlert():void {
-    this.missingValue = false;
+  onDeleteItem(itemIndex:number):void {
+    this.itemList.splice(itemIndex, 1)
   }
-
-  headingText():string {
-    return this.shoppingList.length === 1 
-      ? 'has 1 item.' 
-      : this.shoppingList.length > 1 
-      ? `has ${this.shoppingList.length} items.` 
-      : 'is empty.'
+  listCount():string {
+    const length:number = this.itemList.length;
+    return length === 0 
+    ? 'Your list is empty! '
+    : length === 1
+    ? `Your list contains ${length} item `
+    : `Your list contains ${length} items `
   }
-
-  alertText():string {
-    const all:string = 'All three fields must be filled.';
-    const two:string = 'Please fill the two missing fields.';
-    const one:string = 'Please fill the missing field.';
-    let count:number = 0;
-    if ( this.missingName ) count ++;
-    if ( this.missingPrice ) count ++;
-    if ( this.missingQuantity ) count ++;
-    return count === 3 ? all : count === 2 ? two : one
-  }
-
-  totalPrice():number {
-    let total:number = 0;
-    for (let item of this.shoppingList) {
-      total += parseInt(item.price)
-    }
-    console.log(total);
-    return total;
+  addTwoItems():void {
+    this.itemList.push(
+      {name: 'Blanket', description: 'For the winter.', importance: true, type: 'household'},
+      {name: 'Backpack', description: 'For carrying my laptop.', importance: false, type: 'personal'},
+    )
+    this.addTwo = false;
   }
   
 }

@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+h2,h3 {
+    color: rgb(37, 58, 96);
+}
+.container-fluid {
+    max-width: 1500px;
+}
+.box {
+    padding: 28px;
+    border: 1px solid rgba(128, 128, 128, 0.212);
+    background-color: rgb(238, 238, 238);
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1312);
+}
+.mainlistbox{
+    height: 100%;
+}
