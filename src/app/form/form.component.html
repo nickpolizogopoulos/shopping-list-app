@@ -1,15 +1,12 @@
 
 <!-- TITLE  -->
-<section>
     <div class="row mb-2">
         <h3>Form: Child component #1</h3>
         <hr>
         <p class="lead">Make your own wishlist, add either a personal or household item.</p>
     </div>
-</section>
 
 <!-- FORM  -->
-<section>
     <div class="mb-3">
         <input
         [(ngModel)]="itemName"
@@ -44,17 +41,13 @@
     <div *ngIf="errorAlert" class="alert alert-danger rounded-1">
         Please fill both fields!
     </div>
-</section>
 
-<!-- BUTTONS  -->
-<section>
     <button
         class="btn btn-primary rounded-1 me-3"
         (click)="onAddPersonal()"
     >Personal
     </button>
     
-    <!-- ADD ITEM TWO  -->
     <button
         class="btn btn-primary rounded-1 me-3"
         (click)="onAddHousehold()"
@@ -74,18 +67,14 @@
     >Clear list
     </button>
 
-
     <button *ngIf="loadingButton && !clearedText" class="btn btn-success" type="button" disabled>
         <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
         <span role="status">Clearing...</span>
     </button>
     
-
     <span *ngIf="clearedText" class="text-success lead">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-lg mb-1" viewBox="0 0 16 16">
             <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>
         </svg>
         Done!
     </span>
-</section>
-
