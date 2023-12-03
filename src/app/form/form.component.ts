@@ -4,7 +4,7 @@ import { ListItemProps } from '../app.component';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  styles: ['.form-check-input {border: 1px solid rgb(149, 149, 149);}']
 })
 export class FormComponent {
 
@@ -36,7 +36,7 @@ export class FormComponent {
         this.errorAlert = true;
         setTimeout(():void => {
         this.errorAlert = false;
-        }, 2000);
+        }, 2000); //error alert goes off after 2 secs.
       } else this.missingName = false;
       if ( this.itemDescription === '' ) {
         this.missingDescription = true;
@@ -48,7 +48,7 @@ export class FormComponent {
         this.errorAlert = true;
         setTimeout(():void => {
         this.errorAlert = false;
-        }, 2000);
+        }, 2000); //error alert goes off after 2 secs.
       } else this.missingDescription = false;
       return;
     }
@@ -80,7 +80,7 @@ export class FormComponent {
         this.errorAlert = true;
         setTimeout(():void => {
         this.errorAlert = false;
-        }, 2000);
+        }, 2000); //error alert goes off after 2 secs.
       } else this.missingName = false;
       if ( this.itemDescription === '' ) {
         this.missingDescription = true;
@@ -92,7 +92,7 @@ export class FormComponent {
         this.errorAlert = true;
         setTimeout(():void => {
         this.errorAlert = false;
-        }, 2000);
+        }, 2000); //error alert goes off after 2 secs.
       } else this.missingDescription = false;
       return;     
     }
@@ -125,8 +125,10 @@ export class FormComponent {
       this.clearButton = true;
       setTimeout(():void => {
         this.clearedText = false;
-      }, 1500);
-      this.clearList.emit(():void => {})
+      }, 1500); // cleared text goes off after 1.5 secs.
+      this.clearList.emit(
+        ():void => {}
+      )
     }, 1500);
   }
   

@@ -1,77 +1,72 @@
-<!-- TITLE  -->
-<div class="row mb-2">
-    <h3>Form: Child component #1</h3>
-    <hr>
-    <p class="lead">Make your own wishlist, add either a personal or household item.</p>
-</div>
-<!-- FORM  -->
-<div class="mb-3">
-    <input
-    [(ngModel)]="itemName"
-    type="text"
-    class="form-control shadow-none rounded-1"
-    placeholder="Item name..."
-    >
-    <small *ngIf="missingName" class="text-danger">Please provide an item name.</small>
-</div>
-
-<div class="mb-3">
-    <input
-    [(ngModel)]="itemDescription"
-    type="text"
-    class="form-control shadow-none rounded-1"
-    placeholder="Item description..."
-    >
-    <small *ngIf="missingDescription" class="text-danger">Please provide an item description.</small>
-</div>
-
-<div class="form-check mb-3">
-    <input
-        [checked]="itemImportant"
-        (change)="itemImportant = !itemImportant"
-        class="form-check-input"
-        type="checkbox" id="flexCheckDefault">
-    <label class="form-check-label" for="flexCheckDefault">
-        This item is important.
-    </label>
-</div>
-
-<div *ngIf="errorAlert" class="alert alert-danger rounded-1">
-    Please fill both fields!
-</div>
-
-<button
-    class="btn btn-primary rounded-1 me-3"
-    (click)="onAddPersonal()"
->Personal
-</button>
-
-<button
-    class="btn btn-primary rounded-1 me-3"
-    (click)="onAddHousehold()"
->Household
-</button>
-
-<button
-    (click)="onRemoveLast()"
-    class="btn btn-warning rounded-1 me-3"
->Remove last
-</button> 
-
-<button
-    *ngIf="clearButton && !clearedText"
-    class="btn btn-success rounded-1 me-3 text-white"
-    (click)="onClear()"
->Clear list
-</button>
-
-<button *ngIf="loadingButton && !clearedText" class="btn btn-success" type="button" disabled>
-    <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-    <span role="status">Clearing...</span>
-</button>
-
-<span *ngIf="clearedText" class="text-success lead">
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-lg mb-1" viewBox="0 0 16 16">
-        <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>
-    </svg>Done!
-</span>
+<section>
+    <div class="row mb-2">
+        <h3>Form: Child component #1</h3>
+        <hr>
+        <p class="lead">Make your own wishlist, add either a personal or household item.</p>
+    </div>
+</section>
+<section>
+    <div class="mb-3">
+        <input
+        [(ngModel)]="itemName"
+        type="text"
+        class="form-control shadow-none rounded-1"
+        placeholder="Item name..."
+        >
+        <small *ngIf="missingName" class="text-danger">Please provide an item name.</small>
+    </div>
+    <div class="mb-3">
+        <input
+        [(ngModel)]="itemDescription"
+        type="text"
+        class="form-control shadow-none rounded-1"
+        placeholder="Item description..."
+        >
+        <small *ngIf="missingDescription" class="text-danger">Please provide an item description.</small>
+    </div>
+    <div class="form-check mb-3">
+        <input
+            [checked]="itemImportant"
+            (change)="itemImportant = !itemImportant"
+            class="form-check-input"
+            type="checkbox" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+            This item is important.
+        </label>
+    </div>
+    <div *ngIf="errorAlert" class="alert alert-danger rounded-1 p-2">
+        Please fill both fields!
+    </div>
+</section>
+<section>
+    <button
+        class="btn btn-primary rounded-1 me-3 mb-2"
+        (click)="onAddPersonal()"
+    >Personal
+    </button>
+    <button
+        class="btn btn-primary rounded-1 me-3 mb-2"
+        (click)="onAddHousehold()"
+    >Household
+    </button>
+    <button
+        (click)="onRemoveLast()"
+        class="btn btn-warning rounded-1 me-3 mb-2"
+    >Remove last
+    </button> 
+    <button
+        *ngIf="clearButton && !clearedText"
+        class="btn btn-success rounded-1 me-3 mb-2"
+        (click)="onClear()"
+    >Clear list
+    </button>
+    <button *ngIf="loadingButton && !clearedText" class="btn btn-success mb-2" type="button" disabled>
+        <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+        <span role="status">Clearing...</span>
+    </button>
+    <span *ngIf="clearedText" class="text-success lead">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-lg mb-1" viewBox="0 0 16 16">
+            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022"/>
+        </svg>Done!
+    </span>
+</section>

@@ -10,7 +10,13 @@ export interface ListItemProps {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styles: [`
+    .addTwo {
+      font-size: 14px;
+      cursor: pointer;
+      color: rgb(211, 211, 211);
+    }
+  `]
 })
 export class AppComponent {
 
