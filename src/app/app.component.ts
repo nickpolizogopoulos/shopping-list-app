@@ -7,7 +7,48 @@ import { type ListItem } from './utilities/list-item';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: `
+  
+  <section class="container">
+
+    <header class="box col mt-4 mb-4">
+      <h2>Angular: Passing data between components</h2>
+      <h3>Project: My Wishlist Application
+        @if ( addTwo() ) {
+          <span class="addTwo fw-light" (click)="addTwoItems()">[+2 items]</span>
+        }
+      </h3>
+    </header>
+
+    <section class="d-lg-flex gap-3">
+      <!-- FORM BOX -->
+      <section class="box col mb-4">
+        <app-form
+          (personalItemInput)="onItemAdded($event)"
+          (householdItemInput)="onItemAdded($event)"
+          (clearList)="onClearList()" (removeLast)="removeLastItem()"
+        />
+      </section>
+      <!-- LIST BOX -->
+      <section class="col mb-4">
+        <div class="box mainlistbox">
+          <header class="mb-3">
+            <h3>List: Child component #2</h3>
+            <hr>
+            <span class="lead">{{ listCount() }} - Important items will be
+              <u class="text-success">highlighted.</u>
+            </span>
+          </header>
+          @for (item of allItems(); track $index) {
+            <app-list [listItem]="item" (deleteThisItem)="onDeleteItem($index)" />
+          }
+        </div>
+      </section>
+    </section>  
+
+  </section>
+  
+  `,
   styles: `
 
     .addTwo {
