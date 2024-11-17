@@ -1,36 +1,42 @@
 <section>
-    <div class="row mb-2">
-        <h3>Form: Child component #1</h3>
-        <hr>
-        <p class="lead">Make your own wishlist, add either a personal or household item.</p>
-    </div>
+    <h3>Form: Child component #1</h3>
+    <hr>
+    <p class="lead">Make your own wishlist, add either a personal or household item.</p>
 </section>
 <section>
     <div class="mb-3">
         <input [(ngModel)]="itemName" type="text" class="form-control shadow-none" placeholder="Item name...">
-        <small *ngIf="missingName" class="text-danger">Please provide an item name.</small>
+        @if ( missingName() ) {
+            <small class="text-danger">Please provide an item name.</small>
+        }
     </div>
     <div class="mb-3">
         <input [(ngModel)]="itemDescription" type="text" class="form-control shadow-none" placeholder="Item description...">
-        <small *ngIf="missingDescription" class="text-danger">Please provide an item description.</small>
+        @if ( missingDescription() ) {
+            <small class="text-danger">Please provide an item description.</small>
+        }
     </div>
     <div class="form-check mb-3">
-        <input [checked]="itemImportant" (change)="itemImportant = !itemImportant" class="form-check-input" type="checkbox" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-            This item is important.
-        </label>
+        <input [checked]="itemImportant()" (change)="itemImportant.set(!itemImportant())" class="form-check-input" type="checkbox" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">This item is important.</label>
     </div>
-    <div *ngIf="errorAlert" class="alert alert-danger ps-3 p-2">Please fill both fields!</div>
+    @if ( errorAlert() ) {
+        <div class="alert alert-danger ps-3 p-2">Please fill both fields!</div>
+    }
 </section>
 
 <button (click)="onAddPersonal()" class="btn btn-primary me-3 mb-2">Personal</button>
 <button (click)="onAddHousehold()" class="btn btn-primary me-3 mb-2">Household</button>
 <button (click)="onRemoveLast()" class="btn btn-warning me-3 mb-2">Remove last</button> 
-<button (click)="onClear()" *ngIf="clearButton && !clearedText" class="btn btn-success me-3 mb-2">Clear list</button>
-<button *ngIf="loadingButton && !clearedText" class="btn btn-success mb-2" type="button" disabled>
-    <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-    <span role="status">Clearing...</span>
-</button>
-<span *ngIf="clearedText" class="text-success lead">
-    <img src="../../assets/check.svg"> Done!
-</span>
+@if ( clearButton() && !clearedText() ) {
+    <button (click)="onClear()" class="btn btn-success me-3 mb-2">Clear list</button>
+}
+@if ( loadingButton() && !clearedText() ) {
+    <button class="btn btn-success mb-2" type="button" disabled>
+        <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+        <span role="status">Clearing...</span>
+    </button>
+}
+@if ( clearedText() ) {
+    <span class="text-success lead"> <img src="../../assets/check.svg"> Done!</span>
+}

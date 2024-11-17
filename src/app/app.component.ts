@@ -1,16 +1,14 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  signal
+} from '@angular/core';
 
-export type ListItemProps = {
-  name:string;
-  description:string;
-  importance:boolean;
-  type: 'personal' | 'household';
-}
+import { type ListItem } from './utilities/list-item';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styles: [`
+  styles: `
 
     .addTwo {
       margin-left: 20px;
@@ -19,17 +17,13 @@ export type ListItemProps = {
       color: rgb(211, 211, 211);
     }
 
-  `]
+  `
 })
 export class AppComponent {
 
-  addTwo: boolean = true;
+  addTwo = signal<boolean>(true);
 
-  get list(): ListItemProps[] {
-    return [...this.itemList]
-  }
-
-  private itemList: ListItemProps[] = [
+  private itemList = signal<ListItem[]>([
     {
       name: 'Laptop',
       description: 'For working remotely.', importance: true, 
@@ -39,32 +33,37 @@ export class AppComponent {
       name: 'Carpet',
       description: 'For my living room.', importance: false,
       type: 'household'
-    },
-  ];
+    }
+  ]);
 
-  onItemAdded( itemData: ListItemProps ): void {
-    this.itemList.push({
+  allItems = this.itemList.asReadonly();
+
+  onItemAdded( itemData: ListItem ): void {
+
+    const item: ListItem = {
       name: itemData.name,
       description: itemData.description,
       importance: itemData.importance,
       type: itemData.type
-    });
+    };
+
+    this.itemList().push(item);
   }
 
   onClearList(): void {
-    this.itemList.length = 0;
+    this.itemList().length = 0;
   }
 
   removeLastItem(): void {
-    this.itemList.pop();
+    this.itemList().pop();
   }
 
   onDeleteItem(itemIndex: number): void {
-    this.itemList.splice(itemIndex, 1);
+    this.itemList().splice(itemIndex, 1);
   }
 
   listCount(): string {
-    const length: number = this.itemList.length;
+    const length: number = this.itemList().length;
     return (
         length === 0 
       ? 'Your list is empty! '
@@ -75,7 +74,7 @@ export class AppComponent {
   }
 
   addTwoItems(): void {
-    this.itemList.push(
+    this.itemList().push(
       {
         name: 'Blanket',
         description: 'For the winter.',
@@ -87,9 +86,10 @@ export class AppComponent {
         description: 'For carrying my laptop.',
         importance: false,
         type: 'personal'
-      },
+      }
     );
-    this.addTwo = false;
+    
+    this.addTwo.set(false);
   }
   
 }

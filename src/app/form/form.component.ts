@@ -1,139 +1,148 @@
 import {
-  Component,
-  EventEmitter,
-  Output
+Component,
+  output,
+  signal
 } from '@angular/core';
 
-import { ListItemProps } from '../app.component';
+import { type ListItem } from '../utilities/list-item';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styles: [`
+  styles: `
   
     .form-check-input {
       border: 1px solid rgb(149, 149, 149);
     }
   
-  `]
+  `
 })
 export class FormComponent {
 
-  itemName: string = '';
-  itemDescription: string = '';
-  itemImportant: boolean = false;
-  errorAlert: boolean = false;
-  missingName: boolean = false;
-  missingDescription: boolean = false;
-  clearedText: boolean = false;
-  clearButton: boolean = true;
-  loadingButton: boolean = false;
+  itemName = signal<string>('');
+  itemDescription = signal<string>('');
 
-  @Output() personalItemInput = new EventEmitter<ListItemProps>();
-  @Output() householdItemInput = new EventEmitter<ListItemProps>();
-  @Output() clearList = new EventEmitter<void>();
-  @Output() removeLast = new EventEmitter<void>();
+  itemImportant = signal<boolean>(false);
+  errorAlert = signal<boolean>(false);
+  missingName = signal<boolean>(false);
+  missingDescription = signal<boolean>(false);
+  
+  clearedText = signal<boolean>(false);
+  clearButton = signal<boolean>(true);
+  loadingButton = signal<boolean>(false);
+
+  personalItemInput = output<ListItem>();
+  householdItemInput = output<ListItem>();
+  
+  clearList = output<void>();
+  removeLast = output<void>();
 
   onAddPersonal(): void {
 
-    if ( this.itemName === '' || this.itemDescription === '' ) {
+    if ( this.itemName() === '' || this.itemDescription() === '' ) {
 
-      if ( this.itemName === '' ) {
-        this.missingName = true;
+      if ( this.itemName() === '' ) {
+        this.missingName.set(true);
 
         setTimeout(() =>
-          this.missingName = false,
+          this.missingName.set(false),
           6000
         ); //small text goes off after 6 secs.
 
-        this.errorAlert = true;
+        this.errorAlert.set(true);
 
         setTimeout(() =>
-          this.errorAlert = false,
+          this.errorAlert.set(false),
           2000
         ); //error alert goes off after 2 secs.
 
       }
 
       else 
-        this.missingName = false;
+        this.missingName.set(false);
 
-      if ( this.itemDescription === '' ) {
-        this.missingDescription = true;
+      if ( this.itemDescription() === '' ) {
+        this.missingDescription.set(true);
 
         setTimeout( () =>
-          this.missingDescription = false,
+          this.missingDescription.set(false),
           6000
         ); //small text goes off after 6 secs.
 
-        this.errorAlert = true;
+        this.errorAlert.set(true);
 
         setTimeout( () =>
-          this.errorAlert = false,
+          this.errorAlert.set(false),
           2000); //error alert goes off after 2 secs.
       } 
       else
-        this.missingDescription = false;
+        this.missingDescription.set(false);
 
       return;
     }
-    this.missingName = false;
-    this.missingDescription = false;
+    this.missingName.set(false);
+    this.missingDescription.set(false);
     
     this.personalItemInput.emit({
-      name: this.itemName,
-      description: this.itemDescription,
-      importance: this.itemImportant,
+      name: this.itemName()!,
+      description: this.itemDescription(),
+      importance: this.itemImportant(),
       type: 'personal'
     });
-    this.itemName = '';
-    this.itemDescription = '';
-    this.errorAlert = false;
-    this.itemImportant = false;
+    this.itemName.set('');
+    this.itemDescription.set('');
+    this.errorAlert.set(false);
+    this.itemImportant.set(false);
   }
 
   onAddHousehold():void {
-    if ( this.itemName === '' ||
-      this.itemDescription === '' ) {
-      if ( this.itemName === '' ) {
-        this.missingName = true;
+    if ( this.itemName() === '' ||
+      this.itemDescription() === '' ) {
+      if ( this.itemName() === '' ) {
+        this.missingName.set(true);
 
         setTimeout(():void => {
-          this.missingName = false;
+          this.missingName.set(false);
           }, 6000); //(optional) small text goes off after 6 secs.
 
-        this.errorAlert = true;
-        setTimeout(():void => {
-        this.errorAlert = false;
-        }, 2000); //error alert goes off after 2 secs.
-      } else this.missingName = false;
-      if ( this.itemDescription === '' ) {
-        this.missingDescription = true;
+        this.errorAlert.set(true);
+        setTimeout( () =>
+          this.errorAlert.set(false),
+          2000
+        ); //error alert goes off after 2 secs.
+      } else this.missingName.set(false);
+      if ( this.itemDescription() === '' ) {
+        this.missingDescription.set(true);
 
-        setTimeout(():void => {
-          this.missingDescription = false;
-          }, 6000); //(optional) small text goes off after 6 secs.
+        setTimeout( () =>
+          this.missingDescription.set(false),
+          6000
+        ); //(optional) small text goes off after 6 secs.
 
-        this.errorAlert = true;
-        setTimeout(():void => {
-        this.errorAlert = false;
-        }, 2000); //error alert goes off after 2 secs.
-      } else this.missingDescription = false;
+        this.errorAlert.set(true);
+        setTimeout( () =>
+          this.errorAlert.set(false),
+          2000
+        ); //error alert goes off after 2 secs.
+      }
+      else
+        this.missingDescription.set(false);
+
       return;     
     }
-    this.missingName = false;
-    this.missingDescription = false;
+    this.missingName.set(false);
+    this.missingDescription.set(false);
     
     this.personalItemInput.emit({
-      name: this.itemName,
-      description: this.itemDescription,
-      importance: this.itemImportant,
+      name: this.itemName(),
+      description: this.itemDescription(),
+      importance: this.itemImportant(),
       type: 'household'
     });
-    this.itemName = '';
-    this.itemDescription = '';
-    this.errorAlert = false;
-    this.itemImportant = false;
+    this.itemName.set('');
+    this.itemDescription.set('');
+    this.errorAlert.set(false);
+    this.itemImportant.set(false);
   }
 
   onRemoveLast():void {
@@ -141,16 +150,16 @@ export class FormComponent {
   }
 
   onClear():void {
-    this.loadingButton = true;
-    this.clearButton = false;
+    this.loadingButton.set(true);
+    this.clearButton.set(false);
 
     setTimeout(() => {
-        this.clearedText = true;
-        this.loadingButton = false;
-        this.clearButton = true;
+        this.clearedText.set(true);
+        this.loadingButton.set(false);
+        this.clearButton.set(true);
 
         setTimeout( () =>
-          this.clearedText = false,
+          this.clearedText.set(false),
           800
         ); // cleared text goes off after .8 secs.
         this.clearList.emit();
