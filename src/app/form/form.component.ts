@@ -1,55 +1,80 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output
+} from '@angular/core';
+
 import { ListItemProps } from '../app.component';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
-  styles: ['.form-check-input {border: 1px solid rgb(149, 149, 149);}']
+  styles: [`
+  
+    .form-check-input {
+      border: 1px solid rgb(149, 149, 149);
+    }
+  
+  `]
 })
 export class FormComponent {
 
-  itemName:string = '';
-  itemDescription:string = '';
-  itemImportant:boolean = false;
-  errorAlert:boolean = false;
-  missingName:boolean = false;
-  missingDescription:boolean = false;
-  clearedText:boolean = false;
-  clearButton:boolean = true;
-  loadingButton:boolean = false;
+  itemName: string = '';
+  itemDescription: string = '';
+  itemImportant: boolean = false;
+  errorAlert: boolean = false;
+  missingName: boolean = false;
+  missingDescription: boolean = false;
+  clearedText: boolean = false;
+  clearButton: boolean = true;
+  loadingButton: boolean = false;
 
   @Output() personalItemInput = new EventEmitter<ListItemProps>();
   @Output() householdItemInput = new EventEmitter<ListItemProps>();
-  @Output() clearList = new EventEmitter<Function>();
-  @Output() removeLast = new EventEmitter<Function>();
+  @Output() clearList = new EventEmitter<void>();
+  @Output() removeLast = new EventEmitter<void>();
 
-  onAddPersonal():void {
-    if ( this.itemName === '' ||
-      this.itemDescription === '' ) {
+  onAddPersonal(): void {
+
+    if ( this.itemName === '' || this.itemDescription === '' ) {
+
       if ( this.itemName === '' ) {
         this.missingName = true;
 
-        setTimeout(():void => {
-          this.missingName = false;
-          }, 6000); //small text goes off after 6 secs.
+        setTimeout(() =>
+          this.missingName = false,
+          6000
+        ); //small text goes off after 6 secs.
 
         this.errorAlert = true;
-        setTimeout(():void => {
-        this.errorAlert = false;
-        }, 2000); //error alert goes off after 2 secs.
-      } else this.missingName = false;
+
+        setTimeout(() =>
+          this.errorAlert = false,
+          2000
+        ); //error alert goes off after 2 secs.
+
+      }
+
+      else 
+        this.missingName = false;
+
       if ( this.itemDescription === '' ) {
         this.missingDescription = true;
 
-        setTimeout(():void => {
-          this.missingDescription = false;
-          }, 6000); //small text goes off after 6 secs.
+        setTimeout( () =>
+          this.missingDescription = false,
+          6000
+        ); //small text goes off after 6 secs.
 
         this.errorAlert = true;
-        setTimeout(():void => {
-        this.errorAlert = false;
-        }, 2000); //error alert goes off after 2 secs.
-      } else this.missingDescription = false;
+
+        setTimeout( () =>
+          this.errorAlert = false,
+          2000); //error alert goes off after 2 secs.
+      } 
+      else
+        this.missingDescription = false;
+
       return;
     }
     this.missingName = false;
@@ -112,24 +137,27 @@ export class FormComponent {
   }
 
   onRemoveLast():void {
-    this.removeLast.emit(
-      ():void => {}
-    );
+    this.removeLast.emit();
   }
+
   onClear():void {
     this.loadingButton = true;
     this.clearButton = false;
-    setTimeout(():void => {
-      this.clearedText = true;
-      this.loadingButton = false;
-      this.clearButton = true;
-      setTimeout(():void => {
-        this.clearedText = false;
-      }, 1500); // cleared text goes off after 1.5 secs.
-      this.clearList.emit(
-        ():void => {}
-      )
-    }, 1500);
+
+    setTimeout(() => {
+        this.clearedText = true;
+        this.loadingButton = false;
+        this.clearButton = true;
+
+        setTimeout( () =>
+          this.clearedText = false,
+          800
+        ); // cleared text goes off after .8 secs.
+        this.clearList.emit();
+      },
+      500
+    );
+    
   }
   
 }

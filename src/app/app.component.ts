@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-export interface ListItemProps {
+export type ListItemProps = {
   name:string;
   description:string;
   importance:boolean;
@@ -11,52 +11,84 @@ export interface ListItemProps {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styles: [`
+
     .addTwo {
+      margin-left: 20px;
       font-size: 14px;
       cursor: pointer;
       color: rgb(211, 211, 211);
     }
+
   `]
 })
 export class AppComponent {
 
-  addTwo:boolean = true;
+  addTwo: boolean = true;
 
-  itemList:ListItemProps[] = [
-    {name: 'Laptop', description: 'For working remotely.', importance: true, type: 'personal'},
-    {name: 'Carpet', description: 'For my living room.', importance: false, type: 'household'},
+  get list(): ListItemProps[] {
+    return [...this.itemList]
+  }
+
+  private itemList: ListItemProps[] = [
+    {
+      name: 'Laptop',
+      description: 'For working remotely.', importance: true, 
+      type: 'personal'
+    },
+    {
+      name: 'Carpet',
+      description: 'For my living room.', importance: false,
+      type: 'household'
+    },
   ];
 
-  onItemAdded( itemData:ListItemProps ):void {
+  onItemAdded( itemData: ListItemProps ): void {
     this.itemList.push({
       name: itemData.name,
       description: itemData.description,
       importance: itemData.importance,
       type: itemData.type
-      })
+    });
   }
-  onClearList():void {
+
+  onClearList(): void {
     this.itemList.length = 0;
   }
-  removeLastItem():void {
-    this.itemList.pop()
+
+  removeLastItem(): void {
+    this.itemList.pop();
   }
-  onDeleteItem(itemIndex:number):void {
-    this.itemList.splice(itemIndex, 1)
+
+  onDeleteItem(itemIndex: number): void {
+    this.itemList.splice(itemIndex, 1);
   }
-  listCount():string {
-    const length:number = this.itemList.length;
-    return length === 0 
-    ? 'Your list is empty! '
-    : length === 1
-    ? `Your list contains ${length} item `
-    : `Your list contains ${length} items `
+
+  listCount(): string {
+    const length: number = this.itemList.length;
+    return (
+        length === 0 
+      ? 'Your list is empty! '
+      : length === 1
+      ? `Your list contains ${length} item `
+      : `Your list contains ${length} items `
+    );
   }
-  addTwoItems():void {
+
+  addTwoItems(): void {
     this.itemList.push(
-      {name: 'Blanket', description: 'For the winter.', importance: true, type: 'household'},
-      {name: 'Backpack', description: 'For carrying my laptop.', importance: false, type: 'personal'},
-    )
+      {
+        name: 'Blanket',
+        description: 'For the winter.',
+        importance: true,
+        type: 'household'
+      },
+      {
+        name: 'Backpack',
+        description: 'For carrying my laptop.',
+        importance: false,
+        type: 'personal'
+      },
+    );
     this.addTwo = false;
   }
   

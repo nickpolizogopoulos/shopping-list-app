@@ -1,16 +1,14 @@
-<section class="container-fluid ps-4 pe-4">
-  <section class="mt-5">
-    <div class="row">
-      <div class="col">
-        <div class="box">
-          <h2>Angular: Passing data between components</h2>
-          <h3>Project: My Wishlist Application
-            <span *ngIf="addTwo" class="addTwo" (click)="addTwoItems()">[+2 items]</span>
-          </h3>
-        </div>
-      </div>
+<section class="container">
+
+  <section class="col mt-5">
+    <div class="box">
+      <h2>Angular: Passing data between components</h2>
+      <h3>Project: My Wishlist Application
+        <span *ngIf="addTwo" class="addTwo fw-light" (click)="addTwoItems()">[+2 items]</span>
+      </h3>
     </div>
   </section>
+
   <section class="row mt-4 d-block d-sm-block d-lg-flex">
     <!-- FORM BOX -->
     <div class="col mb-5">
@@ -20,7 +18,7 @@
           (householdItemInput)="onItemAdded($event)"
           (clearList)="onClearList()"
           (removeLast)="removeLastItem()"
-        ></app-form>
+        />
       </div>
     </div>
     <!-- LIST BOX -->
@@ -34,12 +32,12 @@
           </span>
         </div>
         <app-list
-        *ngFor="let item of itemList let i = index"
-        [listItem]="item"
-        (deleteThisItem)="onDeleteItem(i)"
-        ></app-list>
+          *ngFor="let item of list let i = index"
+          [listItem]="item"
+          (deleteThisItem)="onDeleteItem(i)"
+        />
       </div>
     </div>
   </section>  
-</section>
   
+</section>
